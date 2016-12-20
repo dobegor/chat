@@ -1,7 +1,9 @@
 package main
 
 import (
+	"flag"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/apex/log"
@@ -16,7 +18,15 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
+var port int
+
+func init() {
+	flag.IntVar(&port, "port", 9090, "port to listen on")
+}
+
 func main() {
+	flag.Parse()
+
 	log.SetHandler(cli.Default)
 
 	h := &server.Hub{}
@@ -44,7 +54,7 @@ func main() {
 
 	})
 
-	log.Info("Starting server")
+	log.WithField("port", port).Info("Starting server")
 
-	http.ListenAndServe(":9090", r)
+	http.ListenAndServe(":"+strconv.Itoa(port), r)
 }

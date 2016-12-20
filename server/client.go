@@ -13,15 +13,12 @@ import (
 type Client struct {
 	// Client's username
 	Username string
-
 	// Connection pool
 	conns []*connection
-
 	// Synchronizes access to connection pool
-	m sync.Mutex
-
+	m   sync.Mutex
 	hub *Hub
-
+	// True if user's online
 	Online bool
 }
 

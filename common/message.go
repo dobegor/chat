@@ -16,6 +16,7 @@ func Encode(message *Message) []byte {
 	return b
 }
 
+// Decodes message.
 func Decode(data []byte) (*Message, error) {
 	var m Message
 
