@@ -39,10 +39,9 @@ func (h *Hub) AddConnection(username string, conn *websocket.Conn) {
 			h.clients[c.username].Online = true
 			h.broadcast(&common.Message{
 				Username: "SYSTEM",
-				Content:  "Username online: " + c.username,
+				Content:  "User online: " + c.username,
 			})
 		}
-
 		return
 	}
 
@@ -64,7 +63,7 @@ func (h *Hub) AddConnection(username string, conn *websocket.Conn) {
 
 	h.broadcast(&common.Message{
 		Username: "SYSTEM",
-		Content:  "Username online: " + c.username,
+		Content:  "User online: " + c.username,
 	})
 
 }
@@ -88,13 +87,11 @@ func (h *Hub) readPump(c *connection) {
 			if !h.clients[c.username].RemoveConnection(c) {
 				h.broadcast(&common.Message{
 					Username: "SYSTEM",
-					Content:  "Username went offline: " + c.username,
+					Content:  "User went offline: " + c.username,
 				})
 
 				h.clients[c.username].Online = false
-
 			}
-
 			break
 		}
 
@@ -113,9 +110,7 @@ func (h *Hub) readPump(c *connection) {
 
 		msg.Username = c.username
 		h.Broadcast(msg)
-
 	}
-
 }
 
 // Broadcasts message to all connected clients
